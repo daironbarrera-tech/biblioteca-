@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Biblioteca Central · Reservas y préstamos</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<style>
+:root{--bg:#f2ebdf;--fg:#17140f;--mu:#7a7468;--ln:#d6cfc0;--cd:#e5dfd1;--gr:#1d6b46;--rd:#9b2323;--am:#b07a0c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--fg:#f0eadc;--mu:#9d9786;--ln:#33302a;--cd:#24221b;--gr:#2f8a5f;--rd:#c0443e;--am:#a8730a}}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px 'Space Grotesk',system-ui,sans-serif}
+.mono{font-family:'Space Mono',ui-monospace,monospace}a{color:inherit;text-decoration:none;cursor:pointer}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;border-bottom:1px solid var(--ln);flex-wrap:wrap;gap:10px}
+.logo{display:flex;gap:10px;align-items:center}.logo i{width:42px;height:42px;border-radius:50%;background:var(--gr);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:700}
+.logo b{display:block;line-height:1.1}.logo small{font:11px 'Space Mono',monospace;letter-spacing:.1em;color:var(--mu)}
+nav{display:flex;gap:22px;color:var(--mu);flex-wrap:wrap}nav a:hover,nav a.on{color:var(--fg)}
+main{padding:36px 5vw 60px;max-width:1200px;margin:auto}
+.eye{font:700 12px 'Space Mono',monospace;letter-spacing:.2em;color:var(--gr);text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,68px);line-height:1;margin:12px 0;letter-spacing:-.03em}h2{margin:0}
+p.s{color:var(--mu);max-width:560px;line-height:1.5}
+.sb{display:flex;gap:8px;border:1px solid var(--ln);border-radius:40px;padding:6px 6px 6px 20px;max-width:760px;background:var(--cd);margin:22px 0 14px}
+.sb input{flex:1;border:0;background:none;font:inherit;color:var(--fg);outline:0;min-width:0}
+.btn{background:var(--gr);color:#fff;border:0;border-radius:30px;padding:11px 20px;font:inherit;font-weight:500;cursor:pointer}.btn.o{background:none;color:var(--fg);border:1px solid var(--ln)}.btn:disabled{opacity:.4}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:var(--cd);border-radius:20px;padding:8px 16px;font-size:14px;cursor:pointer;border:0;color:var(--fg);font-family:inherit}.chip.on{background:var(--fg);color:var(--bg)}
+.grid{display:grid;grid-template-columns:1fr 340px;gap:40px;margin-top:34px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.hd{display:flex;justify-content:space-between;border-bottom:2px solid var(--fg);padding-bottom:10px;margin-bottom:4px;align-items:baseline}
+.row{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--ln);cursor:pointer}.cov{width:80px;height:112px;border-radius:14px;background:var(--cd);display:grid;place-items:center;font:11px 'Space Mono',monospace;color:var(--mu);flex:none}
+.row>div:last-child{flex:1;min-width:0}.row h3{margin:0 0 4px;font-size:17px}.mu{color:var(--mu)}.sm{font-size:14px}
+.tag{font-size:14px;white-space:nowrap}.tag:before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:currentColor;margin-right:7px}
+.ok{color:var(--gr)}.no{color:var(--rd)}.wa{color:var(--am)}.gy{color:var(--mu)}
+.lnk{color:var(--gr);border-bottom:1px solid var(--ln);background:none;border-top:0;border-left:0;border-right:0;font:inherit;padding:0 0 2px;cursor:pointer;margin-right:16px}.lnk.r{color:var(--rd)}
+.side{background:var(--cd);border-radius:26px;padding:28px;align-self:start;position:sticky;top:16px}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:9px 0;font-size:15px}.kv span:first-child{color:var(--mu)}.kv span:last-child{text-align:right}
+.card{background:var(--cd);border-radius:20px;padding:20px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:24px 0}.cards b{display:block;font-size:38px}
+.tkt{background:var(--cd);border:1px solid var(--ln);border-radius:22px;padding:26px;text-align:center;transform:rotate(2deg);max-width:340px;margin:auto}
+.tkt .q{background:#fff;padding:10px;display:inline-block;margin:12px 0}.tkt .q svg{display:block;width:210px;height:210px}
+.stamp{display:inline-block;border:3px solid currentColor;border-radius:30px;padding:4px 16px;font:700 14px 'Space Mono',monospace;letter-spacing:.1em;transform:rotate(-6deg);margin-top:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}@media(max-width:800px){.two{grid-template-columns:1fr;gap:30px}}
+input.f,select.f{width:100%;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;background:var(--bg);color:var(--fg);font:inherit;margin:4px 0 12px}
+label{font-size:13px;color:var(--mu)}dialog{border:0;border-radius:22px;background:var(--bg);color:var(--fg);padding:26px;width:min(460px,92vw)}dialog::backdrop{background:#0008}
+.scan{border:2px dashed var(--gr);border-radius:24px;padding:34px;text-align:center;margin:22px 0}.scan input{width:100%;max-width:520px;padding:16px;border-radius:14px;border:1px solid var(--ln);background:var(--bg);color:var(--fg);font:18px 'Space Mono',monospace;text-align:center}
+.res{border-radius:22px;padding:26px;margin-top:10px;color:#fff}.res.g{background:var(--gr)}.res.e{background:var(--rd)}.res.w{background:var(--am)}.res h2{font-size:30px;margin:6px 0}
+table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:11px 8px;border-bottom:1px solid var(--ln);font-size:14px}th{color:var(--mu);font-weight:500}.tw{overflow-x:auto}
+footer{border-top:1px solid var(--ln);padding:22px 5vw;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--mu);font-size:14px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:12px 22px;border-radius:30px;display:none;z-index:9}
+</style></head><body>
+<div id="app"></div><div id="toast"></div>
+<dialog id="dlg"></dialog>
+<script>
+const $=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const H24=864e5,LOAN=14,CATS=['Ciencias','Filosofía','Literatura','Historia','Arte'];
+const B=(t,a,y,p,sig,pl,sec,est,cat,n)=>({id:sig.replace(/\W/g,''),t,a,y,p,sig,pl,sec,est,cat,n});
+const seed=()=>({v:1,users:[{id:'u0',name:'Bibliotecario',email:'bibliotecario@biblioteca.com',pw:'admin123',role:'lib'}],res:[],books:[
+B('El arte de la guerra','Sun Tzu',2019,128,'355 S957a',2,'A',7,'Historia',2),B('Sapiens: de animales a dioses','Yuval Noah Harari',2014,496,'909 H254s',2,'A',3,'Historia',2),
+B('Así habló Zaratustra','Friedrich Nietzsche',1883,352,'193 N677a',3,'B',5,'Filosofía',2),B('Breve historia del tiempo','Stephen Hawking',1988,256,'523.1 H393b',2,'D',6,'Ciencias',2),
+B('Cartas a un joven poeta','Rainer Maria Rilke',1929,96,'831 R573c',1,'C',1,'Literatura',2),B('Cien años de soledad','Gabriel García Márquez',1967,471,'863 G216c',1,'C',2,'Literatura',2),
+B('Estructuras de datos y algoritmos','Alfred V. Aho',1998,424,'005.73 A286e',2,'D',11,'Ciencias',2),B('La historia del arte','E. H. Gombrich',1950,688,'709 G632h',3,'E',9,'Arte',2),
+B('Meditaciones','Marco Aurelio',2003,208,'181 M428m',3,'B',1,'Filosofía',1),B('Rayuela','Julio Cortázar',1963,736,'863 C828r',1,'C',12,'Literatura',2),
+B('El origen de las especies','Charles Darwin',1859,502,'576.8 D228o',2,'D',2,'Ciencias',2),B('La república','Platón',2010,384,'184 P718r',3,'B',3,'Filosofía',2)]});
+let S=null,D=null,me=null,q='',cat='Todas',sel=null,route='',reg=false,last=null;
+try{S=JSON.parse(localStorage.getItem('bib_s'))}catch(x){}S=S||seed();
+try{me=localStorage.getItem('bib_me')}catch(x){}
+const user=()=>S.users.find(u=>u.id===me),isLib=()=>user()?.role==='lib';
+const st=r=>r.st==='active'&&Date.now()>r.exp?'expired':r.st;
+const avail=b=>b.n-S.res.filter(r=>r.bid===b.id&&['active','loaned'].includes(st(r))).length;
+const bk=id=>S.books.find(b=>b.id===id);
+const fd=t=>new Date(t).toLocaleString('es',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2600)};
+async function save(fn){if(D){try{const s=await D.get();if(s.exists)S=JSON.parse(JSON.stringify(s.data()))}catch(x){}}fn(S);S.v=(S.v||0)+1;try{localStorage.setItem('bib_s',JSON.stringify(S))}catch(x){}if(D){try{await D.set(S)}catch(x){}}}
+(async()=>{try{const c=await window.claude?.use('db');if(c){D=c.doc('app/state');const s=await D.get();if(s.exists)S=JSON.parse(JSON.stringify(s.data()));else await D.set(S);D.onSnapshot(s=>{if(s.exists){S=JSON.parse(JSON.stringify(s.data()));safeDraw()}});safeDraw()}}catch(x){}})();
+const code=()=>{const h=n=>[...crypto.getRandomValues(new Uint8Array(n))].map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase();return`RES-${h(4)}-${h(2)}`};
+const qr=t=>{const g=qrcode(0,'M');g.addData(t);g.make();return g.createSvgTag({cellSize:4,margin:0,scalable:true})};
+const go=h=>{location.hash=h};
+function safeDraw(){const a=document.activeElement;if(['login','scan'].includes(route)||$('#dlg').open||(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)))return;draw()}
+function head(){const u=user(),r=route;const a=(h,l)=>`<a href="#/${h}" class="${r===h?'on':''}">${l}</a>`;
+return`<header><a href="#/" class="logo"><i>B</i><span><b>Biblioteca Central</b><small>RESERVAS · PRÉSTAMOS</small></span></a><nav>${!u?a('','Catálogo')+a('login','Ingresar'):isLib()?a('scan','Escáner')+a('res','Reservas')+a('inv','Inventario')+a('stats','Panel')+'<a onclick="out()">Salir</a>':a('','Catálogo')+a('mine','Mis reservas')+'<a onclick="out()">Salir</a>'}</nav></header>`}
+function out(){me=null;try{localStorage.removeItem('bib_me')}catch(x){}go('/')}
+function draw(){route=(location.hash.replace('#/','').split('/')[0])||'';const p=location.hash.split('/')[2];
+if(isLib()&&(route===''||route==='mine'||route==='login'))return go('/scan');
+if(!isLib()&&['scan','res','inv','stats'].includes(route))return go(me?'/':'/login');
+if(route==='mine'&&!me)return go('/login');
+const V={'':cat_,login,mine,qr:()=>qrv(p),scan,res:resv,inv,stats}[route]||cat_;
+$('#app').innerHTML=head()+'<main>'+V()+'</main><footer><span>Plataforma de reservas y control bibliotecario</span><span>Préstamo de 14 días · Recogida en 24 h</span></footer>';
+if(route==='')list();if(route==='scan')focusSc();if(route==='qr')tick()}
+addEventListener('hashchange',draw);
+function cat_(){return`<div class="eye">Búsqueda · ${S.books.reduce((a,b)=>a+b.n,0)} volúmenes</div><h1>¿Qué libro<br>buscas hoy?</h1><p class="s">Consulta la disponibilidad y la ubicación exacta en la estantería, y reserva antes de venir.</p>
+<div class="sb"><input id="q" placeholder="Título, autor, ISBN o signatura topográfica" value="${E(q)}" oninput="q=this.value;list()"><button class="btn">Buscar</button></div>
+<div class="chips">${['Todas',...CATS].map(c=>`<button class="chip ${c===cat?'on':''}" onclick="cat='${c}';draw()">${c==='Todas'?'Todas las materias':c}</button>`).join('')}</div>
+<div class="grid"><section><div class="hd"><h2 style="font-size:20px">Resultados</h2><span class="mono mu sm" id="cnt"></span></div><div id="list"></div></section><aside id="side"></aside></div>`}
+function list(){const t=q.toLowerCase(),f=S.books.filter(b=>(cat==='Todas'||b.cat===cat)&&(b.t+b.a+b.sig).toLowerCase().includes(t));
+$('#cnt').textContent=f.length+' de '+S.books.length;const u=user();
+$('#list').innerHTML=f.map(b=>{const n=avail(b),mine=u&&S.res.some(r=>r.bid===b.id&&r.uid===u.id&&['active','loaned'].includes(st(r)));
+return`<div class="row" onclick="sel='${b.id}';side()"><div class="cov">${b.sig.split(' ')[0]}</div><div><div style="display:flex;justify-content:space-between;gap:10px"><h3>${E(b.t)}</h3><span class="tag ${mine?'no':n>0?'ok':'wa'}">${mine?'Reservado':n>0?'Disponible':'Prestado'}</span></div><div class="mu">${E(b.a)} · ${b.y} · ${b.p} p.</div><div class="mono mu sm" style="margin:10px 0">${E(b.sig)} · Planta ${b.pl} · Sección ${E(b.sec)} · Estante ${b.est}</div>${mine?'<span class="mu">Ya tienes una reserva activa</span>':n>0?`<button class="lnk" onclick="event.stopPropagation();reserve('${b.id}')">Reservar</button>`:'<span class="mu">Sin ejemplares en estantería</span>'}</div></div>`}).join('')||'<p class="mu">Sin resultados.</p>';side(f)}
+function side(f){const b=bk(sel)||(f||S.books)[0];if(!b){$('#side').innerHTML='';return}const n=avail(b);
+$('#side').innerHTML=`<div class="side"><div class="eye">Ficha · ${n>0?'Disponible':'Sin stock'}</div><h2 style="margin:10px 0 4px">${E(b.t)}</h2><div class="mu sm">${E(b.a)} · ${b.y} · ${b.p} p.</div><div style="margin:20px 0"><div class="kv"><span>Signatura</span><span class="mono">${E(b.sig)}</span></div><div class="kv"><span>Ubicación</span><span class="mono">Planta ${b.pl} · Sección ${E(b.sec)} · Estante ${b.est}</span></div><div class="kv"><span>Ejemplares</span><span class="mono">${n} / ${b.n}</span></div><div class="kv"><span>Préstamo</span><span class="mono">${LOAN} días</span></div></div><button class="btn" style="width:100%" ${n>0?'':'disabled'} onclick="reserve('${b.id}')">Reservar este ejemplar</button><p class="mu sm" style="text-align:center">Recibirás un QR para recogerlo en el mostrador.</p></div>`}
+async function reserve(id){const u=user();if(!u)return go('/login');let c=null,err='';
+await save(s=>{const act=r=>['active','loaned'].includes(st(r)),b=s.books.find(x=>x.id===id);
+if(b.n-s.res.filter(r=>r.bid===id&&act(r)).length<1)return err='Sin ejemplares disponibles';
+if(s.res.some(r=>r.bid===id&&r.uid===u.id&&act(r)))return err='Ya tienes este libro reservado';
+do{c=code()}while(s.res.some(r=>r.code===c));s.res.push({code:c,uid:u.id,bid:id,at:Date.now(),exp:Date.now()+H24,st:'active'})});
+err?toast(err):go('/qr/'+c)}
+function login(){return`<div class="two"><div><div class="eye">${reg?'Crear cuenta':'Bienvenido'}</div><h1>${reg?'Regístrate':'Ingresa'}</h1><p class="s">Estudiante de prueba: estudiante@biblioteca.com / 1234<br>Bibliotecario de prueba: bibliotecario@biblioteca.com / admin123</p></div><div class="card">${reg?'<label>Nombre</label><input class="f" id="n">':''}<label>Correo</label><input class="f" id="e" type="email"><label>Contraseña</label><input class="f" id="p" type="password" onkeydown="event.key==='Enter'&&auth()"><button class="btn" style="width:100%" onclick="auth()">${reg?'Crear cuenta':'Ingresar'}</button><p class="sm" style="text-align:center"><a class="ok" onclick="reg=!reg;draw()">${reg?'Ya tengo cuenta':'Crear una cuenta'}</a></p></div></div>`}
+async function auth(){const e=$('#e').value.trim().toLowerCase(),p=$('#p').value;if(!e||!p)return toast('Completa los campos');let id=null;
+try{
+if(reg){const n=$('#n').value.trim();if(!n||p.length<4)return toast('Nombre y contraseña (mín. 4)');await save(s=>{if(s.users.some(u=>u.email===e))return;id='u'+Date.now();s.users.push({id,name:n,email:e,pw:p,role:'est'})});if(!id)return toast('Ese correo ya existe')}
+else{if(e==='estudiante@biblioteca.com'&&p==='1234'&&!S.users.some(u=>u.email===e))await save(s=>{s.users.push({id:'u1',name:'Estudiante Demo',email:e,pw:p,role:'est'})});const u=S.users.find(u=>u.email===e&&u.pw===p);if(!u)return toast('Credenciales incorrectas');id=u.id}
+me=id;try{localStorage.setItem('bib_me',id)}catch(x){}toast('Sesión iniciada');if(location.hash==='#/'||location.hash==='')draw();else go('/')}catch(x){toast('Error: '+(x.message||x))}}
+const LB={active:['Reservada','no'],loaned:['Prestada','wa'],returned:['Devuelta','ok'],expired:['Vencida','gy'],cancelled:['Cancelada','gy']};
+function mine(){const L=S.res.filter(r=>r.uid===me).sort((a,b)=>b.at-a.at);
+return`<div class="eye">Tu cuenta</div><h1>Mis reservas</h1><p class="s">Cada reserva tiene una vigencia de 24 horas. Presenta su código QR en el mostrador; si no la recoges, se libera automáticamente.</p><div class="hd" style="margin-top:34px"><h2 style="font-size:20px">Historial</h2><span class="mono mu sm">${L.length} registros</span></div>${L.map(r=>{const b=bk(r.bid)||{t:'(eliminado)',a:'',sig:'',pl:'',est:''},s=st(r);return`<div class="row" style="cursor:default"><div style="flex:1"><div style="display:flex;justify-content:space-between"><h3>${E(b.t)}</h3><span class="${LB[s][1]} sm">${LB[s][0]}</span></div><div class="mu">${E(b.a)}</div><div class="mono mu sm" style="margin:8px 0">${r.code} · ${E(b.sig)} · Planta ${b.pl} · Estante ${b.est}</div><div class="mu sm">${s==='loaned'?'Devolver antes del '+fd(r.due):'Recoger antes del '+fd(r.exp)}</div>${s==='active'?`<p><button class="lnk" onclick="go('/qr/${r.code}')">Ver código QR</button><button class="lnk r" onclick="cancel('${r.code}')">Cancelar</button></p>`:''}</div></div>`}).join('')||'<p class="mu">Aún no tienes reservas.</p>'}`}
+async function cancel(c){if(!confirm('¿Cancelar esta reserva?'))return;await save(s=>{const r=s.res.find(x=>x.code===c);if(r&&st(r)==='active')r.st='cancelled'});draw()}
+function qrv(c){const r=S.res.find(x=>x.code===c&&x.uid===me);if(!r)return'<p class="mu">Reserva no encontrada. <a class="ok" href="#/mine">Ir a mis reservas</a></p>';const b=bk(r.bid)||{},s=st(r);
+return`<div class="two"><div><div class="eye">Confirmación de reserva</div><h1 style="font-size:46px">Tu reserva está lista</h1><p class="s">Muestra el código QR desde tu celular en el mostrador. El bibliotecario lo escaneará, validará la reserva y registrará el préstamo.</p><div class="kv"><span>Ejemplar</span><span class="mono">${E(b.sig)} · Estante ${b.est}</span></div><div class="kv"><span>Recogida</span><span class="mono">Hasta ${fd(r.exp)}</span></div><div class="kv"><span>Tiempo restante</span><span class="mono" id="cd"></span></div><div class="kv"><span>Código</span><span class="mono">${r.code}</span></div></div>
+<div class="tkt"><div class="mono mu sm" style="letter-spacing:.15em">BIBLIOTECA CENTRAL</div><div class="q" style="${s==='active'?'':'opacity:.25'}">${qr(r.code)}</div><div class="mono"><b>${r.code}</b></div><div class="mu sm">${E(b.t)} · Planta ${b.pl} · Sección ${E(b.sec)}</div><div class="stamp ${LB[s][1]}">${LB[s][0].toUpperCase()}</div></div></div>`}
+function tick(){const r=S.res.find(x=>x.code===location.hash.split('/')[2]);const f=()=>{const el=$('#cd');if(!el||!r)return;const m=r.exp-Date.now();el.textContent=st(r)==='active'?Math.floor(m/36e5)+'h '+Math.floor(m%36e5/6e4)+'m':LB[st(r)][0]};f();clearInterval(window._t);window._t=setInterval(f,3e4)}
+function scan(){return`<div class="eye">Mostrador</div><h1 style="font-size:46px">Escanear reserva</h1><p class="s">Dispara la pistola lectora sobre el QR del celular. El campo siempre está activo; también puedes escribir el código y pulsar Enter.</p><div class="scan"><div class="mono mu sm" style="margin-bottom:12px">● LISTO PARA ESCANEAR</div><input id="sc" autocomplete="off" placeholder="RES-XXXXXXXX-XXXX" onkeydown="if(event.key==='Enter'){proc(this.value);this.value=''}" onblur="focusSc()"><div style="margin-top:16px"><button class="btn o" onclick="cam()">📷 Escanear con la cámara</button></div><video id="vid" playsinline muted style="display:none;width:100%;max-width:420px;border-radius:16px;margin-top:14px"></video></div><div id="out">${last||''}</div>`}
+let stream=null,raf=0;
+async function cam(){if(stream)return stopCam();try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}})}catch(x){stream=null;return toast('No se pudo abrir la cámara (permiso denegado o no disponible)')}
+const v=$('#vid');v.srcObject=stream;v.style.display='block';await v.play();const c=document.createElement('canvas'),x=c.getContext('2d',{willReadFrequently:true});
+const loop=()=>{if(!stream)return;if(v.videoWidth){c.width=v.videoWidth;c.height=v.videoHeight;x.drawImage(v,0,0);const d=x.getImageData(0,0,c.width,c.height),r=jsQR(d.data,c.width,c.height);if(r&&r.data){const t=r.data;stopCam();proc(t);return}}raf=requestAnimationFrame(loop)};loop()}
+function stopCam(){cancelAnimationFrame(raf);stream?.getTracks().forEach(t=>t.stop());stream=null;const v=$('#vid');if(v)v.style.display='none'}
+function focusSc(){setTimeout(()=>{const i=$('#sc');if(i&&route==='scan'&&!stream&&!$('#dlg').open)i.focus()},50)}
+async function proc(v){v=v.trim().toUpperCase().replace(/\s/g,'');if(!v)return;let h='';
+const R=(c,t,m)=>`<div class="res ${c}"><div class="mono sm">${E(v)}</div><h2>${t}</h2><div>${m}</div></div>`;
+const r=S.res.find(x=>x.code===v);
+if(!r)h=R('e','Código no válido','No existe ninguna reserva con este código.');
+else{const b=bk(r.bid)||{t:'?',sig:'',pl:'',sec:'',est:''},u=S.users.find(x=>x.id===r.uid),s=st(r),info=`<b>${E(b.t)}</b> · ${E(b.sig)}<br>Planta ${b.pl} · Sección ${E(b.sec)} · Estante ${b.est}<br>Usuario: ${E(u?.name)} (${E(u?.email)})`;
+if(s==='active'){await save(x=>{const y=x.res.find(z=>z.code===v);y.st='loaned';y.loanAt=Date.now();y.due=Date.now()+LOAN*H24});const n=S.res.find(y=>y.code===v);h=R('g','✔ Reserva válida · ENTREGAR LIBRO',info+`<br>Préstamo registrado. Devolución: <b>${fd(n.due)}</b>`)}
+else if(s==='loaned')h=R('w','Ya fue entregado',info+`<br>Prestado el ${fd(r.loanAt)} · vence ${fd(r.due)}<br><br><button class="btn o" style="color:#fff;border-color:#fff" onclick="ret('${v}')">Registrar devolución</button>`);
+else if(s==='expired')h=R('e','Reserva vencida',info+`<br>Venció el ${fd(r.exp)}. El ejemplar fue liberado.`);
+else h=R('e','Reserva '+LB[s][0].toLowerCase(),info)}
+last=h;if(route==='scan')$('#out').innerHTML=h;focusSc()}
+async function ret(c){await save(s=>{const r=s.res.find(x=>x.code===c);if(r&&r.st==='loaned'){r.st='returned';r.retAt=Date.now()}});last='<div class="res g"><h2>Devolución registrada</h2>Inventario actualizado.</div>';draw()}
+function resv(){const L=[...S.res].sort((a,b)=>b.at-a.at);return`<div class="eye">Control</div><h1 style="font-size:46px">Reservas y préstamos</h1><div class="tw"><table><tr><th>Código</th><th>Libro</th><th>Usuario</th><th>Estado</th><th>Límite</th><th></th></tr>${L.map(r=>{const s=st(r);return`<tr><td class="mono">${r.code}</td><td>${E(bk(r.bid)?.t)}</td><td>${E(S.users.find(u=>u.id===r.uid)?.name)}</td><td class="${LB[s][1]}">${LB[s][0]}</td><td>${fd(s==='loaned'?r.due:r.exp)}</td><td>${s==='loaned'?`<button class="lnk" onclick="ret('${r.code}')">Devolución</button>`:''}</td></tr>`}).join('')||'<tr><td colspan=6 class="mu">Sin registros</td></tr>'}</table></div>`}
+function inv(){return`<div class="eye">Inventario</div><div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:12px"><h1 style="font-size:46px">Libros y ejemplares</h1><button class="btn" onclick="form()">+ Agregar libro</button></div><div class="tw"><table><tr><th>Título</th><th>Signatura</th><th>Ubicación</th><th>Disp.</th><th></th></tr>${S.books.map(b=>`<tr><td><b>${E(b.t)}</b><br><span class="mu">${E(b.a)}</span></td><td class="mono">${E(b.sig)}</td><td class="mono">P${b.pl}·${E(b.sec)}·E${b.est}</td><td class="mono">${avail(b)}/${b.n}</td><td><button class="lnk" onclick="form('${b.id}')">Editar</button><button class="lnk r" onclick="del('${b.id}')">Eliminar</button></td></tr>`).join('')}</table></div>`}
+function form(id){const b=bk(id)||{t:'',a:'',y:2024,p:100,sig:'',pl:1,sec:'A',est:1,cat:'Ciencias',n:1},f=(k,l,t='text')=>`<div><label>${l}</label><input class="f" id="f_${k}" type="${t}" value="${E(b[k])}"></div>`;
+$('#dlg').innerHTML=`<h2>${id?'Editar':'Agregar'} libro</h2>${f('t','Título')}${f('a','Autor')}${f('sig','Signatura')}<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">${f('pl','Planta','number')}${f('sec','Sección')}${f('est','Estante','number')}${f('y','Año','number')}${f('p','Páginas','number')}${f('n','Ejemplares','number')}</div><label>Materia</label><select class="f" id="f_cat">${CATS.map(c=>`<option ${c===b.cat?'selected':''}>${c}</option>`).join('')}</select><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn o" onclick="$('#dlg').close()">Cancelar</button><button class="btn" onclick="sv('${id||''}')">Guardar</button></div>`;$('#dlg').showModal()}
+async function sv(id){const g=k=>$('#f_'+k).value.trim(),o={t:g('t'),a:g('a'),sig:g('sig'),pl:+g('pl'),sec:g('sec'),est:+g('est'),y:+g('y'),p:+g('p'),n:Math.max(0,+g('n')),cat:g('cat')};
+if(!o.t||!o.sig)return toast('Título y signatura son obligatorios');
+await save(s=>{if(id)Object.assign(s.books.find(b=>b.id===id),o);else s.books.push({id:'b'+Date.now(),...o})});$('#dlg').close();draw()}
+async function del(id){if(!confirm('¿Eliminar este libro?'))return;await save(s=>{s.books=s.books.filter(b=>b.id!==id)});draw()}
+function stats(){const T=S.books.reduce((a,b)=>a+b.n,0),A=S.books.reduce((a,b)=>a+avail(b),0),c=k=>S.res.filter(r=>st(r)===k).length;
+return`<div class="eye">Panel</div><h1 style="font-size:46px">Estadísticas</h1><div class="cards">${[['Títulos',S.books.length],['Ejemplares',T],['Disponibles',A],['Reservas activas',c('active')],['Prestados',c('loaned')],['Vencidas',c('expired')],['Devueltas',c('returned')],['Usuarios',S.users.filter(u=>u.role==='est').length]].map(x=>`<div class="card"><span class="mu sm">${x[0]}</span><b>${x[1]}</b></div>`).join('')}</div>`}
+draw();
+</script></body></html>
